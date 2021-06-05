@@ -34,7 +34,7 @@ class Mqttx
 
         if ( $mqtt->connect(true, null, $this->username, $this->password) )  {
             $mqtt->publish($topic, $msg, $this->qos, $this->retain);
-            $mqtt->close();
+//            $mqtt->close();
             return true;
         }
 
