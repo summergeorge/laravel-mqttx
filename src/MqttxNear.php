@@ -274,14 +274,14 @@ class MqttxNear
 
         $string = $this->read(4);
 
-        if (ord($string{0}) >> 4 === 2 && $string{3} === chr(0)) {
+        if (ord($string[0]) >> 4 === 2 && $string[3] === chr(0)) {
             $this->__debugx('Connected to Broker', 'debug');
         } else {
             $this->__debugx(
                 sprintf(
                     "Connection failed! (Error: 0x%02x 0x%02x)\n",
-                    ord($string{0}),
-                    ord($string{3})
+                    ord($string[0]),
+                    ord($string[3])
                 ),
                 'error'
             );
@@ -401,8 +401,8 @@ class MqttxNear
     public function disconnect(): void
     {
         $head = ' ';
-        $head{0} = chr(0xe0);
-        $head{1} = chr(0x00);
+        $head[0] = chr(0xe0);
+        $head[1] = chr(0x00);
         fwrite($this->socket, $head, 2);
         $this->__debugx('mqtt disconnect.', 'info');
     }
@@ -451,7 +451,7 @@ class MqttxNear
             ++$cmd;
         }
 
-        $head{0} = chr($cmd);
+        $head[0] = chr($cmd);
         $head .= $this->setmsglength($i);
 
         fwrite($this->socket, $head, strlen($head));
@@ -486,7 +486,7 @@ class MqttxNear
      */
     public function message($msg)
     {
-        $tlen = (ord($msg{0}) << 8) + ord($msg{1});
+        $tlen = (ord($msg[0]) << 8) + ord($msg[1]);
         $topic = substr($msg, 2, $tlen);
         $msg = substr($msg, ($tlen + 2));
         $found = false;
@@ -621,7 +621,7 @@ class MqttxNear
         $multiplier = 1;
         $value = 0;
         do {
-            $digit = ord($msg{$i});
+            $digit = ord($msg[$i]);
             $value += ($digit & 127) * $multiplier;
             $multiplier *= 128;
             $i++;
@@ -677,9 +677,9 @@ class MqttxNear
     {
         $strlen = strlen($string);
         for ($j = 0; $j < $strlen; $j++) {
-            $num = ord($string{$j});
+            $num = ord($string[$j]);
             if ($num > 31) {
-                $chr = $string{$j};
+                $chr = $string[$j];
             } else {
                 $chr = ' ';
             }
