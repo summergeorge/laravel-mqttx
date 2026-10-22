@@ -1,5 +1,5 @@
 {
-    "name": "jzzoo/laravel-mqttx",
+    "name": "summergeorge/laravel-mqttx",
     "description": "A simple PHP Laravel framework MQTT library, very convenient to use",
     "type": "library",
     "license": "MIT",
